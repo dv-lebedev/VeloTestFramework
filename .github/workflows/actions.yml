@@ -1,0 +1,60 @@
+name: Build App
+run-name: ${{ github.actor }} is testing out CI
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: windows-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+
+
+    
+    - uses: actions/checkout@v2
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+
+    - name: Setup vpk
+      run:  dotnet tool install -g vpk
+
+    - name: Create folder
+      shell: cmd
+      run: if not exist VeloTestFramework\Releases mkdir VeloTestFramework\Releases
+
+    - name: Restore NuGet packages
+      run: nuget restore VeloTestFramework.sln
+      
+    - name: Build for staging
+      working-directory: ./VeloTestFramework
+      run:  |
+         msbuild VeloTestFramework.csproj -t:build /p:Configuration=${{ env.TARGET_NAME }} /p:OutDir=Publish /p:Version=${{ steps.versioning.outputs.version }}
+
+
+    - name: Sign Package
+      working-directory: ./VoicescriptTranscriber
+      run: |
+          msbuild -t:vpk /p:Configuration=${{ env.TARGET_NAME }} /p:PackageVersion=${{ steps.versioning.outputs.version }}
+      shell: cmd
+
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: services
+        path: Releases
+        if-no-files-found: error 
+    
+     
+    - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+    - run: echo "This job is now running on a ${{ runner.os }} server."
+    - run: echo "Workspace ${{ github.workspace }}."
+    - name: List files in the repository
+      run: |
+        ls '~/.nuget/packages'
+    - run: echo "This job's status is ${{ job.status }}."
+
