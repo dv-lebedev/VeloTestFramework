@@ -118,7 +118,7 @@
     </ProjectReference>
   </ItemGroup>
     <Target Name="vpk">
-    <Exec Command="vpk pack -u VeloTestFramework -v 1.0.0 -p publish -e VeloTestFramework.exe --skipVeloAppCheck --packTitle VeloTestFramework --packAuthors $quote;MeAndMe$quote; --splashImage=$quote;./VeloTestFramework.SpashScreen/Splash_screen_1x.png$quote;" />
+    <Exec Command="vpk pack -u VeloTestFramework -v 1.0.0 -p publish -e VeloTestFramework.exe --skipVeloAppCheck --packTitle VeloTestFramework --packAuthors $quote;MeAndMe$quote; --splashImage=$quote;./VeloTestFramework.SplashScreen/Splash_screen_1x.png$quote;" />
   </Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
