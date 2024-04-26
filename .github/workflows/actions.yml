@@ -34,10 +34,6 @@ jobs:
       run:  |
          msbuild VeloTestFramework.csproj -t:build /p:Configuration=${{ env.TARGET_NAME }} /p:OutDir=Publish /p:Version=${{ steps.versioning.outputs.version }}
 
-    - name: Files
-      working-directory: ./VeloTestFramework
-      shell: cmd
-      run: dir
 
     - name: Sign Package
       working-directory: ./VeloTestFramework
