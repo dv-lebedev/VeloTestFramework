@@ -38,7 +38,7 @@ jobs:
     - name: Sign Package
       working-directory: ./VoicescriptTranscriber
       run: |
-          msbuild -t:vpk /p:Configuration=${{ env.TARGET_NAME }} /p:PackageVersion=${{ steps.versioning.outputs.version }}
+          msbuild -t:vpk
       shell: cmd
 
 
