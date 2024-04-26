@@ -46,8 +46,8 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: services
-        path: Releases
-        if-no-files-found: error 
+        path: ./VeloTestFramework/Releases
+        if-no-files-found: error
     
      
     - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
